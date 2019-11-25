@@ -1,0 +1,59 @@
+server:
+  port: 8088
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: Hystrix_Stream
+        uri: http://httpbin.org:80
+        predicates:
+        - Host=**localhost:8088
+        - Path=/actuator/hystrix.stream
+        filters:
+        - Hystrix=Hystrix_Stream
+      - id: securityService
+        uri: http://localhost:8092/
+        predicates:
+        - Host=**localhost:8088
+        - Path=/**
+        filters:
+        - Hystrix=SecurityService
+        #- CustomFilter
+      - id: Hystrix_Com
+        uri: http://httpbin.org:80
+        predicates:
+        - Host=*.hystrix.com
+        filters:
+        - Hystrix=HystrixCom
+        
+        # service name instead of URI
+        # global filter instead of custom filter for sending to the security service.
+        # login needs a special custom filter because it's getting a jwt whereas the other ones are including the jwt.
+        
+#eureka:
+#  client:
+#    registry-fetch-interval-seconds: 5
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka  
