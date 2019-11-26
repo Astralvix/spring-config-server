@@ -40,7 +40,8 @@ spring:
         - Path=/**
         filters:
         - Hystrix=SecurityService
-        - CustomFilter
+	- SecurityFilter
+	#- CustomFilter
       - id: Hystrix_Com
         uri: http://httpbin.org:80
         predicates:
