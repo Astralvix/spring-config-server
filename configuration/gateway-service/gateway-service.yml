@@ -34,13 +34,15 @@ spring:
         filters:
         - Hystrix=Hystrix_Stream
       - id: securityService
-        uri: http://localhost:8092/
-        predicates:
+        #uri: http://localhost:8092/
+        uri: lb://{application}/
+	predicates:
         - Host=**localhost:8088
         - Path=/**
         filters:
         - Hystrix=SecurityService
-        - CustomFilter
+	- SecurityFilter
+	#- CustomFilter
       - id: Hystrix_Com
         uri: http://httpbin.org:80
         predicates:

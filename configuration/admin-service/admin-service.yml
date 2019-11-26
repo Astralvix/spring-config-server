@@ -1,5 +1,5 @@
 server:
-  port: 8089
+  port: 8091
 
 spring: 
   application:
@@ -12,7 +12,6 @@ spring:
     properties:
       hibernate:
         default_schema: ${RIDESHARE_POSTGRES_1909_SCHEMA}    
-  database:          
   datasource:
     url: jdbc:postgresql://${RIDESHARE_POSTGRES_1909_URL}:5432/postgres?
     username: ${RIDESHARE_POSTGRES_1909_USERNAME}
