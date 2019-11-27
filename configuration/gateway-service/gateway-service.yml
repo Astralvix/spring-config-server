@@ -54,8 +54,8 @@ spring:
         # global filter instead of custom filter for sending to the security service.
         # login needs a special custom filter because it's getting a jwt whereas the other ones are including the jwt.
         
-#eureka:
-#  client:
-#    registry-fetch-interval-seconds: 5
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka  
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://localhost:8761/eureka  
